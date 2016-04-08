@@ -1,3 +1,5 @@
+dependencies: []
+
 galaxy_info:
   author: marv2097
   description: PF_RING Packet Capture
@@ -15,6 +17,8 @@ galaxy_info:
   #- name: Debian
   #  versions:
   #  - all
+
+
   
   galaxy_tags:
     - pfring
