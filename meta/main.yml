@@ -1,0 +1,25 @@
+galaxy_info:
+  author: marv2097
+  description: PF_RING Packet Capture
+  company: 
+  license: MIT
+  min_ansible_version: 1.9
+
+  platforms:
+  - name: EL
+    versions:
+    - all
+  #- name: Ubuntu
+  #  versions:
+  #  - all
+  #- name: Debian
+  #  versions:
+  #  - all
+  
+  galaxy_tags:
+    - pfring
+    - pcap
+    - packet capture
+    - wireshark
+    - tcpdump
+    - tshark

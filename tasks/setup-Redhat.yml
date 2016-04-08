@@ -1,0 +1,29 @@
+---
+
+  # Get and install PF_RING according to http://packages.ntop.org/centos-stable/
+
+  - name: Add ntop GPG Key
+    rpm_key:
+      key: http://packages.ntop.org/centos-stable/RPM-GPG-KEY-deri
+      state: present
+
+  - name: Add ntop repo
+    copy:
+      src:  ntop.repo
+      dest: /etc/yum.repos.d/ntop.repo
+      mode: 0644
+
+  - name: Install PF_RING
+    yum: 
+      name: pfring
+      state: present
+      udpate_cache: yes
+
+  - name: Configure PF_RING
+    file:
+      path: /etc/pf_ring/pf_ring.start
+
+  - name: Start PF_RING
+    service:
+      name: pf_ring
+      state: started 
