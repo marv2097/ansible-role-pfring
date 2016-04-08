@@ -23,7 +23,7 @@ galaxy_info:
   galaxy_tags:
     - pfring
     - pcap
-    - packet capture
+    - capture
     - wireshark
     - tcpdump
     - tshark
