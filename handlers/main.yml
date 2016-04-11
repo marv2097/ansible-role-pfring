@@ -1,2 +1,4 @@
 ---
 # handlers file for pfring
+- name: restart pfring
+  service: name=pf_ring state=restarted

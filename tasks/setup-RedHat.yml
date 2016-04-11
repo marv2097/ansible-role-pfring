@@ -1,0 +1,80 @@
+---
+
+  # Get and install PF_RING according to http://packages.ntop.org/centos-stable/
+
+  # Setup Yum
+
+  - name: Add ntop GPG Key
+    rpm_key:
+      key: http://packages.ntop.org/centos-stable/RPM-GPG-KEY-deri
+      state: present
+
+  - name: Add ntop repo
+    copy:
+      src:  ntop.repo
+      dest: /etc/yum.repos.d/ntop.repo
+      mode: 0644
+
+
+  # Install packages
+
+  - name: Install PF_RING
+    yum: 
+      name: pfring
+      state: latest
+      update_cache: yes
+
+  - name: Install ZC Driver
+    yum:
+      name: pfring-drivers-zc-dkms
+      state: latest
+
+  - name: Install hiredis
+    yum:
+      name: hiredis
+      state: latest
+
+
+ # Config files
+
+  - name: Create PF_RING IXGBE Directory
+    file: path=/etc/pf_ring/zc/ixgbe state=directory mode=0755
+
+  - name: Create PF_RING IGB Directory
+    file: path=/etc/pf_ring/zc/igb state=directory mode=0755
+
+  - name: Configure IXGBE
+    lineinfile: 
+      dest: /etc/pf_ring/zc/ixgbe/ixgbe.conf
+      line: "RSS=4,4"
+      create: yes
+
+  - name: Create IXGBE Start File
+    file: path=/etc/pf_ring/zc/ixgbe/ixgbe.start state=touch
+
+  - name: Configure IGB
+    lineinfile:
+      dest: /etc/pf_ring/zc/igb/igb.conf
+      line: "RSS=4,4"
+      create: yes
+
+  - name: Create IGB Start File
+    file: path=/etc/pf_ring/zc/igb/igb.start state=touch
+
+  - name: Create PF_RING Conf File
+    file: path=/etc/pf_ring/pf_ring.conf state=touch
+
+  - name: Create PF_RING Start File
+    file: path=/etc/pf_ring/pf_ring.start state=touch
+
+  - name: Configure Hugepages
+    lineinfile:
+      dest: /etc/pf_ring/hugepages.conf
+      line: "node=0 hugepagenumber=1024"
+      create: yes
+
+  - name: Start PF_RING
+    service:
+      name: pf_ring
+      state: started 
+      enabled: yes
